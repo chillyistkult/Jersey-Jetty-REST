@@ -6,16 +6,16 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
-import de.htw.core.FooManager;
+import de.htw.core.DocumentManager;
 
 import com.google.inject.Inject;
 
 @Path("/foo")
-public class FooResource {
-	private final FooManager manager;
+public class DocumentResource {
+	private final DocumentManager manager;
 
 	@Inject
-	public FooResource(FooManager manager) {
+	public DocumentResource(DocumentManager manager) {
 		this.manager = manager;
 	}
 

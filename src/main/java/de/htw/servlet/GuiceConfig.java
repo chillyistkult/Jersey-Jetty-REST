@@ -3,7 +3,7 @@ package de.htw.servlet;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.htw.core.MyAppModule;
+import de.htw.core.RESTModule;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -18,7 +18,7 @@ public class GuiceConfig extends GuiceServletContextListener {
 		return Guice.createInjector(new JerseyServletModule() {
 			@Override
 			protected void configureServlets() {
-				install(new MyAppModule());
+				install(new RESTModule());
 
 				// Set init params for Jersey
 				Map<String, String> params = new HashMap<String, String>();

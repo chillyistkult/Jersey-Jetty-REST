@@ -1,6 +1,6 @@
 package de.htw.core;
 
-public interface FooManager {
+public interface DocumentManager {
 
 	public String getFoo();
 

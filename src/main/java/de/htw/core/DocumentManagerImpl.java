@@ -1,6 +1,6 @@
 package de.htw.core;
 
-class FooManagerImpl implements FooManager {
+class DocumentManagerImpl implements DocumentManager {
 	private String theFoo = "bar";
 	
 	public synchronized String getFoo() {

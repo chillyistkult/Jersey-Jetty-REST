@@ -9,4 +9,6 @@ public interface DocumentManager {
 
 	public void setResources(HashMap<Integer, File> resources);
 
+	public void createResource(String content);
+
 }

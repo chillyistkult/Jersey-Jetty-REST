@@ -7,21 +7,17 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.UUID;
 
 class DocumentManagerImpl implements DocumentManager {
     private HashMap<Integer, File> resources = new HashMap<Integer, File>();
 
     @Inject
     public DocumentManagerImpl() {
-        try {
-            File file = new File("Test1.txt");
-            FileWriter fw = new FileWriter(file.getPath());
-            BufferedWriter bw = new BufferedWriter(fw);
-            bw.write("Das ist ein Test");
-            bw.close();
-            this.resources.put(1, file);
-        } catch (IOException e) {
-            e.printStackTrace();
+        for(int i=1;i<=3; i++) {
+            File file = new File(UUID.randomUUID().toString() + ".txt");
+            writeToFile(file, "Das ist ein eine UUID: " + UUID.randomUUID().toString());
+            resources.put(i, file);
         }
     }
 
@@ -33,4 +29,20 @@ class DocumentManagerImpl implements DocumentManager {
         this.resources = resources;
     }
 
+    public synchronized void createResource(String content) {
+        File file = new File(UUID.randomUUID().toString());
+        writeToFile(file, content);
+        this.resources.put(resources.size()+1, file);
+    }
+
+    private void writeToFile(File file, String content) {
+        try {
+            FileWriter fw = new FileWriter(file.getPath());
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(content);
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

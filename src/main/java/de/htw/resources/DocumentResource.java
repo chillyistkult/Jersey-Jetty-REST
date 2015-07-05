@@ -1,11 +1,14 @@
 package de.htw.resources;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import de.htw.core.DocumentManager;
 
 import com.google.inject.Inject;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -21,30 +24,40 @@ public class DocumentResource {
 	}
 
 	@GET
-	@Produces("application/json")
-	public HashMap retrieve() {
+	@Produces(MediaType.APPLICATION_JSON)
+	public HashMap getResources() {
 		return manager.getResources();
 	}
 
 	@POST
-	@Consumes("application/json")
-	public void update(HashMap resources) {
-		manager.setResources(resources);
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void createResource(String content) {
+		System.out.println("Post called");
+		System.out.println(content);
+		manager.createResource(content);
 	}
 
 	@GET
 	@Path("{id}")
-	@Produces("application/json")
-	public String getDocumentById(@PathParam("id") int id) throws IOException {
-		return new String(Files.readAllBytes(Paths.get(manager.getResources().get(id).getPath())));
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getResourceById(@PathParam("id") int id) throws IOException {
+		File file = manager.getResources().get(id);
+		if(file==null) {
+			return Response.status(Response.Status.NOT_FOUND).entity("File not found for ID: " + id).build();
+		}
+		return Response.ok(new String(Files.readAllBytes(Paths.get(manager.getResources().get(id).getPath()))), MediaType.APPLICATION_JSON).build();
 	}
 
 	@DELETE
 	@Path("{id}")
-	@Produces("application/json")
-	public HashMap deleteDocumentById(@PathParam("id") int id) throws IOException {
-		manager.getResources().remove(id);
-		return manager.getResources();
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteResourceById(@PathParam("id") int id) throws IOException {
+		if(manager.getResources().remove(id)!=null) {
+			return Response.ok().build();
+		}
+		else {
+			return Response.status(Response.Status.NOT_FOUND).entity("File not found for ID: " + id).build();
+		}
 	}
 
 

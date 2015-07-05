@@ -2,6 +2,8 @@
 
 A simple RESTful web service realized with Maven, Jersey and Jetty.
 
+Resources in this context are actual files stored in your project root and organized within a HashMap.
+
 | Endpoint      | HTTP Method   | Response  |
 | ------------- |:-------------:| -----:|
 | /resources    | GET           | A list of available resources |

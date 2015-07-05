@@ -1,16 +1,17 @@
 package de.htw.resources;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 
 import de.htw.core.DocumentManager;
 
 import com.google.inject.Inject;
 
-@Path("/foo")
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.HashMap;
+
+@Path("/resources")
 public class DocumentResource {
 	private final DocumentManager manager;
 
@@ -21,13 +22,30 @@ public class DocumentResource {
 
 	@GET
 	@Produces("application/json")
-	public String retrieve() {
-		return manager.getFoo();
+	public HashMap retrieve() {
+		return manager.getResources();
 	}
 
-	@PUT
+	@POST
 	@Consumes("application/json")
-	public void update(String foo) {
-		manager.setFoo(foo);
+	public void update(HashMap resources) {
+		manager.setResources(resources);
 	}
+
+	@GET
+	@Path("{id}")
+	@Produces("application/json")
+	public String getDocumentById(@PathParam("id") int id) throws IOException {
+		return new String(Files.readAllBytes(Paths.get(manager.getResources().get(id).getPath())));
+	}
+
+	@DELETE
+	@Path("{id}")
+	@Produces("application/json")
+	public HashMap deleteDocumentById(@PathParam("id") int id) throws IOException {
+		manager.getResources().remove(id);
+		return manager.getResources();
+	}
+
+
 }

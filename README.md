@@ -13,11 +13,11 @@ Resources in this context are actual files stored in your project root and organ
 
 ## Usage
 
-Start the server
+**Start the server**
 
 ``mvn compile exec:java```
 
-Check if it works
+**Check if it works**
 
 ```curl "http://localhost:8080/resources/1"```
 

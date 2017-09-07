@@ -15,7 +15,7 @@ Resources in this context are actual files stored in your project root and organ
 
 **Start the server**
 
-``mvn compile exec:java```
+```compile exec:java```
 
 **Check if it works**
 
